@@ -1,0 +1,8 @@
+dotnet add package Microsoft.Data.SqlClient
+dotnet add package Microsoft.Data.SqlClient --version 2.1.3
+
+dotnet remove package Microsoft.Data.SqlClient
+
+* se utilizar o Dispose() ao invés do Close(), depois quando tiver que utilizar o DB novamente terá de instanciar o objeto SqlConnection() novamente;
+
+dotnet add package Dapper
