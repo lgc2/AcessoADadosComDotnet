@@ -9,10 +9,13 @@ using (var connection = new SqlConnection(connectionString))
     // CreateCategory(connection);
     // CreateManyCategory(connection);
     // UpdateCategory(connection);
-    ListCategories(connection);
-    GetCategory(connection, "Backend");
+    // ListCategories(connection);
+    // GetCategory(connection, "Backend");
     // DeleteCategory(connection, "Amazon AWS");
     // ExecuteProcedure(connection, new Guid("429d84eb-979c-4ee9-a8d3-b7a438d92836"));
+    // ExecuteReadProcedure(connection, new Guid("09ce0b7b-cfca-497b-92c0-3290ad9d5142"));
+    // ExecuteScalar(connection);
+    ReadView(connection);
 }
 
 static void GetCategory(SqlConnection connection, string categoryTitle)
@@ -158,4 +161,67 @@ static void ExecuteProcedure(SqlConnection connection, Guid studentId)
     var affectedRows = connection.Execute(procedure, pars, commandType: System.Data.CommandType.StoredProcedure);
 
     Console.WriteLine($"{affectedRows} linhas afetadas");
+}
+
+static void ExecuteReadProcedure(SqlConnection connection, Guid categoryId)
+{
+    var procedure = "[spGetCoursesByCategory]";
+    var pars = new { CategoryId = categoryId };
+    var courses = connection.Query(procedure, pars, commandType: System.Data.CommandType.StoredProcedure);
+
+    // como não criamos a classe Course, os itens da lista não serão tipados, estarão como dynamic (lista do tipo dinâmico)
+    var row = 0;
+    foreach (var item in courses)
+    {
+        row++;
+        Console.WriteLine($"{row}- {item.Id} | {item.Title}");
+    }
+}
+
+static void ExecuteScalar(SqlConnection connection)
+{
+    var category = new Category();
+    category.Title = "Amazon AWS (Execute Scalar)";
+    category.Url = "execute-scalar-example";
+    category.Description = "Categoria destinada a serviços da AWS (Execute Scalar)";
+    category.Order = 8;
+    category.Summary = "AWS Cloud (Execute Scalar)";
+    category.Featured = false;
+
+    var insertSql = @"
+    INSERT INTO
+        [Category]
+    OUTPUT inserted.[Id]
+    VALUES(
+        NEWID(),
+        @Title,
+        @Url,
+        @Summary,
+        @Order,
+        @Description,
+        @Featured)
+    ";
+
+    var id = connection.ExecuteScalar<Guid>(insertSql, new
+    {
+        category.Id,
+        category.Title,
+        category.Url,
+        category.Summary,
+        category.Order,
+        category.Description,
+        category.Featured
+    });
+
+    Console.WriteLine($"A categoria inserida foi: {id}");
+}
+
+static void ReadView(SqlConnection connection)
+{
+    var sql = "SELECT * FROM [vwCourses]";
+    var courses = connection.Query(sql);
+    foreach (var item in courses)
+    {
+        Console.WriteLine($"{item.Id} | {item.Title}");
+    }
 }
