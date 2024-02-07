@@ -15,7 +15,9 @@ using (var connection = new SqlConnection(connectionString))
     // ExecuteProcedure(connection, new Guid("429d84eb-979c-4ee9-a8d3-b7a438d92836"));
     // ExecuteReadProcedure(connection, new Guid("09ce0b7b-cfca-497b-92c0-3290ad9d5142"));
     // ExecuteScalar(connection);
-    ReadView(connection);
+    // ReadView(connection);
+    // OneToOne(connection);
+    OneToMany(connection);
 }
 
 static void GetCategory(SqlConnection connection, string categoryTitle)
@@ -223,5 +225,70 @@ static void ReadView(SqlConnection connection)
     foreach (var item in courses)
     {
         Console.WriteLine($"{item.Id} | {item.Title}");
+    }
+}
+
+static void OneToOne(SqlConnection connection)
+{
+    var sql = @"
+    SELECT
+        *
+    FROM
+        [CareerItem]
+        inner join [Course] ON [CareerItem].[CourseId] = [Course].[Id]";
+
+    var items = connection.Query<CareerItem, Course, CareerItem>(
+        sql,
+        (careerItem, course) =>
+        {
+            careerItem.Course = course;
+            return careerItem;
+        }, splitOn: "Id");
+    foreach (var item in items)
+    {
+        Console.WriteLine($"{item.Title} - Curso: {item.Course.Title}");
+    }
+}
+
+static void OneToMany(SqlConnection connection)
+{
+    var sql = @"
+    SELECT
+        [Career].[Id],
+        [Career].[Title],
+        [CareerItem].[CareerId],
+        [CareerItem].[Title]
+    FROM
+        [Career]
+        INNER JOIN
+            [CareerItem] ON [Career].[Id] = [CareerItem].[CareerId]
+    ORDER BY
+        [Career].[Title]";
+
+    var careers = new List<Career>();
+    var items = connection.Query<Career, CareerItem, Career>(
+        sql,
+        (career, careerItem) =>
+        {
+            var car = careers.Where(x => x.Id == career.Id).FirstOrDefault();
+            if (car == null)
+            {
+                car = career;
+                car.Items.Add(careerItem);
+                careers.Add(car);
+            }
+            else
+            {
+                car.Items.Add(careerItem);
+            }
+            return career;
+        }, splitOn: "CareerId");
+    foreach (var career in careers)
+    {
+        Console.WriteLine($"{career.Title}");
+        foreach (var item in career.Items)
+        {
+            Console.WriteLine($" - {item.Title}");
+        }
     }
 }
