@@ -17,7 +17,8 @@ using (var connection = new SqlConnection(connectionString))
     // ExecuteScalar(connection);
     // ReadView(connection);
     // OneToOne(connection);
-    OneToMany(connection);
+    // OneToMany(connection);
+    QueryMultiple(connection);
 }
 
 static void GetCategory(SqlConnection connection, string categoryTitle)
@@ -289,6 +290,26 @@ static void OneToMany(SqlConnection connection)
         foreach (var item in career.Items)
         {
             Console.WriteLine($" - {item.Title}");
+        }
+    }
+}
+
+static void QueryMultiple(SqlConnection connection)
+{
+    var sql = "SELECT * FROM [Category]; SELECT * FROM [Course]";
+
+    using (var multi = connection.QueryMultiple(sql))
+    {
+        var categories = multi.Read<Category>();
+        var courses = multi.Read<Course>();
+
+        foreach (var category in categories)
+        {
+            Console.WriteLine(category.Title);
+        }
+        foreach (var course in courses)
+        {
+            Console.WriteLine(course.Title);
         }
     }
 }
