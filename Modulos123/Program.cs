@@ -18,7 +18,10 @@ using (var connection = new SqlConnection(connectionString))
     // ReadView(connection);
     // OneToOne(connection);
     // OneToMany(connection);
-    QueryMultiple(connection);
+    // QueryMultiple(connection);
+    // SelectIn(connection);
+    // SelectLike(connection, "%backen%");
+    Transaction(connection);
 }
 
 static void GetCategory(SqlConnection connection, string categoryTitle)
@@ -311,5 +314,91 @@ static void QueryMultiple(SqlConnection connection)
         {
             Console.WriteLine(course.Title);
         }
+    }
+}
+
+static void SelectIn(SqlConnection connection)
+{
+    var sql = @"
+    SELECT *
+    FROM
+        [Career]
+    WHERE [Id] IN @Id";
+
+    var items = connection.Query<Career>(sql, new
+    {
+        Id = new[]{
+        "01ae8a85-b4e8-4194-a0f1-1c6190af54cb",
+        "e6730d1c-6870-4df3-ae68-438624e04c72"
+        }
+    });
+
+    foreach (var item in items)
+    {
+        Console.WriteLine(item.Title);
+    }
+}
+
+static void SelectLike(SqlConnection connection, string titleLike)
+{
+    var sql = @"
+    SELECT *
+    FROM
+        [Career]
+    WHERE [Title] LIKE @expression";
+
+    var items = connection.Query<Career>(sql, new
+    {
+        expression = titleLike
+        // ou expression = $"%{titleLike}%"
+    });
+
+    foreach (var item in items)
+    {
+        Console.WriteLine(item.Title);
+    }
+}
+
+static void Transaction(SqlConnection connection)
+{
+    var category = new Category();
+    category.Id = Guid.NewGuid();
+    category.Title = "Categoria que não quero salvar";
+    category.Url = "amazon";
+    category.Description = "Categoria destinada a serviços da AWS";
+    category.Order = 9;
+    category.Summary = "AWS Cloud";
+    category.Featured = false;
+
+    var insertSql = @"INSERT INTO
+    [Category]
+    VALUES(
+        @Id,
+        @Title,
+        @Url,
+        @Summary,
+        @Order,
+        @Description,
+        @Featured
+    )";
+
+    connection.Open();
+    using (var transaction = connection.BeginTransaction())
+    {
+        var rows = connection.Execute(insertSql, new
+        {
+            category.Id,
+            category.Title,
+            category.Url,
+            category.Summary,
+            category.Order,
+            category.Description,
+            category.Featured
+        }, transaction);
+
+        transaction.Commit();
+        // transaction.Rollback();
+
+        Console.WriteLine($"{rows} linhas inseridas");
     }
 }
