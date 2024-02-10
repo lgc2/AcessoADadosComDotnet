@@ -20,8 +20,8 @@ using (var connection = new SqlConnection(connectionString))
     // OneToMany(connection);
     // QueryMultiple(connection);
     // SelectIn(connection);
-    // SelectLike(connection, "%backen%");
-    Transaction(connection);
+    SelectLike(connection, "%backen%");
+    // Transaction(connection);
 }
 
 static void GetCategory(SqlConnection connection, string categoryTitle)
