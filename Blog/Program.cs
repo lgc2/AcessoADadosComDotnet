@@ -10,10 +10,14 @@ namespace Blog
 
         static void Main(string[] args)
         {
-            ReadUser();
+            ReadUsers();
+            ReadUser(2);
+            // CreateUser();
+            // UpdateUser();
+            DeleteUser(2);
         }
 
-        static void ReadUser()
+        static void ReadUsers()
         {
             using (var connection = new SqlConnection(CONNECTION_STRING))
             {
@@ -21,8 +25,68 @@ namespace Blog
 
                 foreach (var user in users)
                 {
-                    Console.WriteLine($"Nome: {user.Name}");
+                    Console.WriteLine($"GetAll users: {user.Name}");
                 }
+            }
+        }
+
+        static void ReadUser(int userId)
+        {
+            using (var connection = new SqlConnection(CONNECTION_STRING))
+            {
+                var user = connection.Get<User>(userId);
+
+                Console.WriteLine($"Get user: {user.Name}");
+            }
+        }
+
+        static void CreateUser()
+        {
+            var user = new User()
+            {
+                Bio = "Equipe balta.io",
+                Email = "hello@balta.io",
+                Image = "https://...",
+                Name = "Equipe balta.io",
+                PasswordHash = "HASH",
+                Slug = "equipe-balta"
+            };
+
+            using (var connection = new SqlConnection(CONNECTION_STRING))
+            {
+                connection.Insert<User>(user);
+                Console.WriteLine("Cadastro realizado com sucesso!");
+            }
+        }
+
+        static void UpdateUser()
+        {
+            var user = new User()
+            {
+                Id = 2,
+                Bio = "Equipe | balta.io",
+                Email = "hellooo@balta.io",
+                Image = "https://...",
+                Name = "Equipe de suporte balta.io",
+                PasswordHash = "HASH",
+                Slug = "equipe-suporte-balta"
+            };
+
+            using (var connection = new SqlConnection(CONNECTION_STRING))
+            {
+                connection.Update<User>(user);
+                Console.WriteLine("Cadastro editado com sucesso!");
+            }
+        }
+
+        static void DeleteUser(int userId)
+        {
+            using (var connection = new SqlConnection(CONNECTION_STRING))
+            {
+                var user = connection.Get<User>(userId);
+                connection.Delete<User>(user);
+
+                Console.WriteLine("Exclusão realizada com sucesso!");
             }
         }
     }
