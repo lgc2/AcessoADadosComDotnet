@@ -15,91 +15,116 @@ namespace Blog
             connection.Open();
 
             ReadUsers(connection);
+            ReadUser(connection, 3);
+
+            /*
+            var newUser = new User()
+            {
+                Name = "lgc2_2",
+                Email = "lgc2.2@balta.io",
+                PasswordHash = "HASH123456",
+                Bio = "Equipe recente do balta.io",
+                Image = "https://...",
+                Slug = "equipe-recente-balta2"
+            };
+            CreateUser(connection, newUser);
+            */
+
+            /*
+            var newUser = new User()
+            {
+                Id = 5,
+                Name = "lgc2_2_2",
+                Email = "lgc2.2.2@balta.io",
+                PasswordHash = "HASH123456789",
+                Bio = "Equipe recente do balta.io",
+                Image = "https://...",
+                Slug = "equipe-recente-balta2-2"
+            };
+            UpdateUser(connection, newUser);
+            */
+
+            /*
+            var newUser = new User()
+            {
+                Id = 5
+            };
+            DeleteUser(connection, newUser);
+            */
+
+            // DeleteUser(connection, 4);
+
             ReadRoles(connection);
-            // ReadUser(2);
-            // CreateUser();
-            // UpdateUser();
-            // DeleteUser(2);
+            ReadTags(connection);
 
             connection.Close();
         }
 
         static void ReadUsers(SqlConnection connection)
         {
-            var repository = new UserRepository(connection);
-            var users = repository.Get();
+            var repository = new Repository<User>(connection);
+            var items = repository.Get();
 
-            foreach (var user in users)
-                Console.WriteLine(user.Name);
+            foreach (var item in items)
+                Console.WriteLine(item.Name);
+        }
+
+        static void ReadUser(SqlConnection connection, int userId)
+        {
+            var repository = new Repository<User>(connection);
+            var user = repository.Get(userId);
+
+            Console.WriteLine($"Get by id: {user.Name}");
+        }
+
+        static void CreateUser(SqlConnection connection, User user)
+        {
+            var repository = new Repository<User>(connection);
+            var insertId = repository.Create(user);
+
+            Console.WriteLine($"Id of insertion: {insertId}");
+        }
+
+        static void UpdateUser(SqlConnection connection, User user)
+        {
+            var repository = new Repository<User>(connection);
+            var wasUpdated = repository.Update(user);
+
+            Console.WriteLine($"Was it updated? {wasUpdated}");
+        }
+
+        static void DeleteUser(SqlConnection connection, User user)
+        {
+            var repository = new Repository<User>(connection);
+            var wasDeleted = repository.Delete(user);
+
+            Console.WriteLine($"Was it deleted? {wasDeleted}");
+        }
+
+        static void DeleteUser(SqlConnection connection, int userId)
+        {
+            var repository = new Repository<User>(connection);
+            var wasDeleted = repository.Delete(userId);
+
+            Console.WriteLine($"Was it deleted? {wasDeleted}");
         }
 
         static void ReadRoles(SqlConnection connection)
         {
-            var repository = new RoleRepository(connection);
-            var roles = repository.Get();
+            var repository = new Repository<Role>(connection);
+            var items = repository.Get();
 
-            foreach (var role in roles)
-                Console.WriteLine(role.Name);
+            foreach (var item in items)
+                Console.WriteLine(item.Name);
         }
 
-        // static void ReadUser(int userId)
-        // {
-        //     using (var connection = new SqlConnection(CONNECTION_STRING))
-        //     {
-        //         var user = connection.Get<User>(userId);
+        static void ReadTags(SqlConnection connection)
+        {
+            var repository = new Repository<Tag>(connection);
+            var items = repository.Get();
 
-        //         Console.WriteLine($"Get user: {user.Name}");
-        //     }
-        // }
-
-        // static void CreateUser()
-        // {
-        //     var user = new User()
-        //     {
-        //         Bio = "Equipe balta.io",
-        //         Email = "hello@balta.io",
-        //         Image = "https://...",
-        //         Name = "Equipe balta.io",
-        //         PasswordHash = "HASH",
-        //         Slug = "equipe-balta"
-        //     };
-
-        //     using (var connection = new SqlConnection(CONNECTION_STRING))
-        //     {
-        //         connection.Insert<User>(user);
-        //         Console.WriteLine("Cadastro realizado com sucesso!");
-        //     }
-        // }
-
-        // static void UpdateUser()
-        // {
-        //     var user = new User()
-        //     {
-        //         Id = 2,
-        //         Bio = "Equipe | balta.io",
-        //         Email = "hellooo@balta.io",
-        //         Image = "https://...",
-        //         Name = "Equipe de suporte balta.io",
-        //         PasswordHash = "HASH",
-        //         Slug = "equipe-suporte-balta"
-        //     };
-
-        //     using (var connection = new SqlConnection(CONNECTION_STRING))
-        //     {
-        //         connection.Update<User>(user);
-        //         Console.WriteLine("Cadastro editado com sucesso!");
-        //     }
-        // }
-
-        // static void DeleteUser(int userId)
-        // {
-        //     using (var connection = new SqlConnection(CONNECTION_STRING))
-        //     {
-        //         var user = connection.Get<User>(userId);
-        //         connection.Delete<User>(user);
-
-        //         Console.WriteLine("Exclusão realizada com sucesso!");
-        //     }
-        // }
+            foreach (var item in items)
+                Console.WriteLine(item.Name);
+        }
     }
 }
