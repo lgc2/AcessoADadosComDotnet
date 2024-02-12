@@ -15,6 +15,7 @@ namespace Blog
             connection.Open();
 
             ReadUsers(connection);
+            ReadRoles(connection);
             // ReadUser(2);
             // CreateUser();
             // UpdateUser();
@@ -32,64 +33,73 @@ namespace Blog
                 Console.WriteLine(user.Name);
         }
 
-        static void ReadUser(int userId)
+        static void ReadRoles(SqlConnection connection)
         {
-            using (var connection = new SqlConnection(CONNECTION_STRING))
-            {
-                var user = connection.Get<User>(userId);
+            var repository = new RoleRepository(connection);
+            var roles = repository.Get();
 
-                Console.WriteLine($"Get user: {user.Name}");
-            }
+            foreach (var role in roles)
+                Console.WriteLine(role.Name);
         }
 
-        static void CreateUser()
-        {
-            var user = new User()
-            {
-                Bio = "Equipe balta.io",
-                Email = "hello@balta.io",
-                Image = "https://...",
-                Name = "Equipe balta.io",
-                PasswordHash = "HASH",
-                Slug = "equipe-balta"
-            };
+        // static void ReadUser(int userId)
+        // {
+        //     using (var connection = new SqlConnection(CONNECTION_STRING))
+        //     {
+        //         var user = connection.Get<User>(userId);
 
-            using (var connection = new SqlConnection(CONNECTION_STRING))
-            {
-                connection.Insert<User>(user);
-                Console.WriteLine("Cadastro realizado com sucesso!");
-            }
-        }
+        //         Console.WriteLine($"Get user: {user.Name}");
+        //     }
+        // }
 
-        static void UpdateUser()
-        {
-            var user = new User()
-            {
-                Id = 2,
-                Bio = "Equipe | balta.io",
-                Email = "hellooo@balta.io",
-                Image = "https://...",
-                Name = "Equipe de suporte balta.io",
-                PasswordHash = "HASH",
-                Slug = "equipe-suporte-balta"
-            };
+        // static void CreateUser()
+        // {
+        //     var user = new User()
+        //     {
+        //         Bio = "Equipe balta.io",
+        //         Email = "hello@balta.io",
+        //         Image = "https://...",
+        //         Name = "Equipe balta.io",
+        //         PasswordHash = "HASH",
+        //         Slug = "equipe-balta"
+        //     };
 
-            using (var connection = new SqlConnection(CONNECTION_STRING))
-            {
-                connection.Update<User>(user);
-                Console.WriteLine("Cadastro editado com sucesso!");
-            }
-        }
+        //     using (var connection = new SqlConnection(CONNECTION_STRING))
+        //     {
+        //         connection.Insert<User>(user);
+        //         Console.WriteLine("Cadastro realizado com sucesso!");
+        //     }
+        // }
 
-        static void DeleteUser(int userId)
-        {
-            using (var connection = new SqlConnection(CONNECTION_STRING))
-            {
-                var user = connection.Get<User>(userId);
-                connection.Delete<User>(user);
+        // static void UpdateUser()
+        // {
+        //     var user = new User()
+        //     {
+        //         Id = 2,
+        //         Bio = "Equipe | balta.io",
+        //         Email = "hellooo@balta.io",
+        //         Image = "https://...",
+        //         Name = "Equipe de suporte balta.io",
+        //         PasswordHash = "HASH",
+        //         Slug = "equipe-suporte-balta"
+        //     };
 
-                Console.WriteLine("Exclusão realizada com sucesso!");
-            }
-        }
+        //     using (var connection = new SqlConnection(CONNECTION_STRING))
+        //     {
+        //         connection.Update<User>(user);
+        //         Console.WriteLine("Cadastro editado com sucesso!");
+        //     }
+        // }
+
+        // static void DeleteUser(int userId)
+        // {
+        //     using (var connection = new SqlConnection(CONNECTION_STRING))
+        //     {
+        //         var user = connection.Get<User>(userId);
+        //         connection.Delete<User>(user);
+
+        //         Console.WriteLine("Exclusão realizada com sucesso!");
+        //     }
+        // }
     }
 }
