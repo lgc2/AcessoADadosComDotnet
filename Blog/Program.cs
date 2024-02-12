@@ -1,4 +1,5 @@
 ﻿using Blog.Models;
+using Blog.Repositories;
 using Dapper.Contrib.Extensions;
 using Microsoft.Data.SqlClient;
 
@@ -10,24 +11,25 @@ namespace Blog
 
         static void Main(string[] args)
         {
-            ReadUsers();
-            ReadUser(2);
+            var connection = new SqlConnection(CONNECTION_STRING);
+            connection.Open();
+
+            ReadUsers(connection);
+            // ReadUser(2);
             // CreateUser();
             // UpdateUser();
-            DeleteUser(2);
+            // DeleteUser(2);
+
+            connection.Close();
         }
 
-        static void ReadUsers()
+        static void ReadUsers(SqlConnection connection)
         {
-            using (var connection = new SqlConnection(CONNECTION_STRING))
-            {
-                var users = connection.GetAll<User>();
+            var repository = new UserRepository(connection);
+            var users = repository.Get();
 
-                foreach (var user in users)
-                {
-                    Console.WriteLine($"GetAll users: {user.Name}");
-                }
-            }
+            foreach (var user in users)
+                Console.WriteLine(user.Name);
         }
 
         static void ReadUser(int userId)
