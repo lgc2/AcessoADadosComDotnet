@@ -1,6 +1,6 @@
 using Dapper.Contrib.Extensions;
 
-namespace Desafio.Models
+namespace Blog.Models
 {
     [Table("[Category]")]
     public class Category

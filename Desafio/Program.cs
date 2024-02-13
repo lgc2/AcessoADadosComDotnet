@@ -1,9 +1,7 @@
-﻿using Desafio.Models;
-using Desafio.Repositories;
-using Dapper.Contrib.Extensions;
+﻿using Blog.Screens.TagScreens;
 using Microsoft.Data.SqlClient;
 
-namespace Desafio
+namespace Blog
 {
     class Program
     {
@@ -14,124 +12,55 @@ namespace Desafio
             var connection = new SqlConnection(CONNECTION_STRING);
             connection.Open();
 
-            ReadUsersWithRoles(connection);
-            // ReadUser(connection, 3);
+            Load();
 
-            /*
-            var newUser = new User()
-            {
-                Name = "lgc2_2",
-                Email = "lgc2.2@balta.io",
-                PasswordHash = "HASH123456",
-                Bio = "Equipe recente do balta.io",
-                Image = "https://...",
-                Slug = "equipe-recente-balta2"
-            };
-            CreateUser(connection, newUser);
-            */
-
-            /*
-            var newUser = new User()
-            {
-                Id = 5,
-                Name = "lgc2_2_2",
-                Email = "lgc2.2.2@balta.io",
-                PasswordHash = "HASH123456789",
-                Bio = "Equipe recente do balta.io",
-                Image = "https://...",
-                Slug = "equipe-recente-balta2-2"
-            };
-            UpdateUser(connection, newUser);
-            */
-
-            /*
-            var newUser = new User()
-            {
-                Id = 5
-            };
-            DeleteUser(connection, newUser);
-            */
-
-            // DeleteUser(connection, 4);
-
-            // ReadRoles(connection);
-            // ReadTags(connection);
-
+            Console.ReadKey();
             connection.Close();
         }
 
-        static void ReadUsersWithRoles(SqlConnection connection)
+        private static void Load()
         {
-            var repository = new UserRepository(connection);
-            var items = repository.GetWithRoles();
+            Console.Clear();
+            Console.WriteLine("Meu Blog");
+            Console.WriteLine("--------------------");
+            Console.WriteLine("O que deseja fazer?");
+            Console.WriteLine();
+            Console.WriteLine("1- Gestão de usuário");
+            Console.WriteLine("2- Gestão de perfil");
+            Console.WriteLine("3- Gestão de categoria");
+            Console.WriteLine("4- Gestão de tag");
+            Console.WriteLine("5- Vincular perfil/usuário");
+            Console.WriteLine("6- Vincular post/tag");
+            Console.WriteLine("7- Relatórios");
+            Console.WriteLine();
+            Console.WriteLine();
+            var option = short.Parse(Console.ReadLine()!);
 
-            foreach (var item in items)
+            switch (option)
             {
-                Console.WriteLine(item.Name);
-
-                foreach (var role in item.Roles)
-                {
-                    Console.WriteLine($" - {role.Name}");
-                }
+                case 1:
+                    // MenuUserScreen.Load();
+                    break;
+                case 2:
+                    // MenuRoleScreen.Load();
+                    break;
+                case 3:
+                    // MenuCategoryScreen.Load();
+                    break;
+                case 4:
+                    MenuTagScreen.Load();
+                    break;
+                case 5:
+                    // .Load();
+                    break;
+                case 6:
+                    // .Load();
+                    break;
+                case 7:
+                    // .Load();
+                    break;
+                default: Load(); break;
             }
-        }
-
-        static void ReadUser(SqlConnection connection, int userId)
-        {
-            var repository = new Repository<User>(connection);
-            var user = repository.Get(userId);
-
-            Console.WriteLine($"Get by id: {user.Name}");
-        }
-
-        static void CreateUser(SqlConnection connection, User user)
-        {
-            var repository = new Repository<User>(connection);
-            var insertId = repository.Create(user);
-
-            Console.WriteLine($"Id of insertion: {insertId}");
-        }
-
-        static void UpdateUser(SqlConnection connection, User user)
-        {
-            var repository = new Repository<User>(connection);
-            var wasUpdated = repository.Update(user);
-
-            Console.WriteLine($"Was it updated? {wasUpdated}");
-        }
-
-        static void DeleteUser(SqlConnection connection, User user)
-        {
-            var repository = new Repository<User>(connection);
-            var wasDeleted = repository.Delete(user);
-
-            Console.WriteLine($"Was it deleted? {wasDeleted}");
-        }
-
-        static void DeleteUser(SqlConnection connection, int userId)
-        {
-            var repository = new Repository<User>(connection);
-            var wasDeleted = repository.Delete(userId);
-
-            Console.WriteLine($"Was it deleted? {wasDeleted}");
-        }
-
-        static void ReadRoles(SqlConnection connection)
-        {
-            var repository = new Repository<Role>(connection);
-            var items = repository.Get();
-
-            foreach (var item in items)
-                Console.WriteLine(item.Name);
-        }
-
-        static void ReadTags(SqlConnection connection)
-        {
-            var repository = new Repository<Tag>(connection);
-            var items = repository.Get();
-
-            foreach (var item in items)
-                Console.WriteLine(item.Name);
         }
     }
 }

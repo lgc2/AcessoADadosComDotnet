@@ -1,8 +1,8 @@
-using Desafio.Models;
+using Blog.Models;
 using Dapper;
 using Microsoft.Data.SqlClient;
 
-namespace Desafio.Repositories
+namespace Blog.Repositories
 {
     public class UserRepository : Repository<User>
     {

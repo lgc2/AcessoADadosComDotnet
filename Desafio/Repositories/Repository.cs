@@ -1,7 +1,7 @@
 using Dapper.Contrib.Extensions;
 using Microsoft.Data.SqlClient;
 
-namespace Desafio.Repositories
+namespace Blog.Repositories
 {
     public class Repository<T> where T : class
     {
