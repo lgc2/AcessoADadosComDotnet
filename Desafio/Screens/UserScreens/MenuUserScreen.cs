@@ -1,18 +1,18 @@
-namespace Blog.Screens.TagScreens
+namespace Blog.Screens.UserScreens
 {
-    public static class MenuTagScreen
+    public static class MenuUserScreen
     {
         public static void Load()
         {
             Console.Clear();
-            Console.WriteLine("Gestão de tags");
-            Console.WriteLine("--------------------");
+            Console.WriteLine("Gestão de usuários");
+            Console.WriteLine("------------------");
             Console.WriteLine("O que deseja fazer?");
             Console.WriteLine();
-            Console.WriteLine("1- Listar tags");
-            Console.WriteLine("2- Cadastrar tag");
-            Console.WriteLine("3- Atualizar tag");
-            Console.WriteLine("4- Excluir tag");
+            Console.WriteLine("1- Listar usuários");
+            Console.WriteLine("2- Cadastrar usuário");
+            Console.WriteLine("3- Atualizar usuário");
+            Console.WriteLine("4- Excluir usuário");
             Console.WriteLine();
             Console.WriteLine("5- Voltar ao Menu Principal");
             var option = short.Parse(Console.ReadLine());
@@ -20,16 +20,16 @@ namespace Blog.Screens.TagScreens
             switch (option)
             {
                 case 1:
-                    ListTagScreen.Load();
+                    ListUserScreen.Load();
                     break;
                 case 2:
-                    CreateTagScreen.Load();
+                    CreateUserScreen.Load();
                     break;
                 case 3:
-                    UpdateTagScreen.Load();
+                    UpdateUserScreen.Load();
                     break;
                 case 4:
-                    DeleteTagScreen.Load();
+                    DeleteUserScreen.Load();
                     break;
                 case 5:
                     Program.Load();

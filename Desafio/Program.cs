@@ -1,4 +1,5 @@
 ﻿using Blog.Screens.TagScreens;
+using Blog.Screens.UserScreens;
 using Microsoft.Data.SqlClient;
 
 namespace Blog
@@ -18,7 +19,7 @@ namespace Blog
             Database.Connection.Close();
         }
 
-        private static void Load()
+        public static void Load()
         {
             Console.Clear();
             Console.WriteLine("Meu Blog");
@@ -39,7 +40,7 @@ namespace Blog
             switch (option)
             {
                 case 1:
-                    // MenuUserScreen.Load();
+                    MenuUserScreen.Load();
                     break;
                 case 2:
                     // MenuRoleScreen.Load();
