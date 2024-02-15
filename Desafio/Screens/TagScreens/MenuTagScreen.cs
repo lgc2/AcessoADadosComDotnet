@@ -32,7 +32,7 @@ namespace Blog.Screens.TagScreens
                     DeleteTagScreen.Load();
                     break;
                 case 5:
-                    Program.Load();
+                    MainMenuScreen.Load();
                     break;
                 default: Load(); break;
             }

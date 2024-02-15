@@ -29,6 +29,7 @@ namespace Blog.Screens.UserScreens
                     Console.Write($", Perfil: {role.Name}");
                 }
             }
+            Console.WriteLine();
         }
     }
 }

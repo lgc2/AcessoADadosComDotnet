@@ -1,7 +1,7 @@
 DESAFIOS
 ________
 
-Cadastrar um usuário
+Cadastrar um usuário --> OK
 Cadastrar um perfil
 Vincular um usuário a um perfil
 
@@ -12,7 +12,7 @@ Cadastrar uma tag
 Cadastrar um post
 Vincular um post a uma tag
 
-Listar usuários (Nome, Email e perfis separados por vírgula)
+Listar usuários (Nome, Email e perfis separados por vírgula) --> OK
 Listar categorias com quantidade de posts
 Listar tags com quantidade de posts
 Listar os posts de uma categoria

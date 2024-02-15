@@ -7,36 +7,55 @@ namespace Blog.Screens.UserScreens
     {
         public static void Load()
         {
-            // Console.Clear();
-            // Console.WriteLine("Nova tag");
-            // Console.WriteLine("--------");
-            // Console.WriteLine();
+            Console.Clear();
+            Console.WriteLine("Novo usuário");
+            Console.WriteLine("------------");
+            Console.WriteLine();
 
-            // Console.Write("Nome: ");
-            // var name = Console.ReadLine();
+            Console.Write("Nome: ");
+            var name = Console.ReadLine();
 
-            // Console.Write("Slug: ");
-            // var slug = Console.ReadLine();
+            Console.Write("Email: ");
+            var email = Console.ReadLine();
 
-            // Create(new Tag() { Name = name, Slug = slug });
-            // Console.ReadKey();
+            var passwordHash = Guid.NewGuid();
 
-            // MenuTagScreen.Load();
+            Console.Write("Bio: ");
+            var bio = Console.ReadLine();
+
+            Console.Write("URL da imagem: ");
+            var image = Console.ReadLine();
+
+            Console.Write("Slug: ");
+            var slug = Console.ReadLine();
+
+            Create(new User()
+            {
+                Name = name,
+                Email = email,
+                PasswordHash = passwordHash.ToString(),
+                Bio = bio,
+                Image = image,
+                Slug = slug
+            });
+            Console.ReadKey();
+
+            MenuUserScreen.Load();
         }
 
-        private static void Create(Tag tag)
+        private static void Create(User user)
         {
-            //     try
-            //     {
-            //         var repository = new Repository<Tag>(Database.Connection);
-            //         var tagId = repository.Create(tag);
-            //         Console.WriteLine($"id da tag criada: {tagId}");
-            //     }
-            //     catch (Exception ex)
-            //     {
-            //         Console.WriteLine("Não foi possivel inserir a tag.");
-            //         Console.WriteLine(ex.Message);
-            //     }
+            try
+            {
+                var repository = new Repository<User>(Database.Connection);
+                var userId = repository.Create(user);
+                Console.WriteLine($"id do usuário criado {userId}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Não foi possivel inserir o usuário.");
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
