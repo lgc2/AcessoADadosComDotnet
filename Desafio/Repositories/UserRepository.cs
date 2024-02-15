@@ -48,5 +48,18 @@ namespace Blog.Repositories
 
             return users;
         }
+
+        public int UserRoleLink(int userId, int roleId)
+        {
+            var sql = @"
+            INSERT INTO [UserRole] ([UserId], [RoleId])
+            VALUES (@UserId, @RoleId)";
+
+            return _connection.Execute(sql, new
+            {
+                UserId = userId,
+                RoleId = roleId
+            });
+        }
     }
 }

@@ -13,8 +13,9 @@ namespace Blog.Screens.UserScreens
             Console.WriteLine("2- Cadastrar usuário");
             Console.WriteLine("3- Atualizar usuário");
             Console.WriteLine("4- Excluir usuário");
+            Console.WriteLine("5- Vincular um usuário a um perfil");
             Console.WriteLine();
-            Console.WriteLine("5- Voltar ao Menu Principal");
+            Console.WriteLine("6- Voltar ao Menu Principal");
             var option = short.Parse(Console.ReadLine());
 
             switch (option)
@@ -32,6 +33,9 @@ namespace Blog.Screens.UserScreens
                     DeleteUserScreen.Load();
                     break;
                 case 5:
+                    UserRoleScreen.Load();
+                    break;
+                case 6:
                     MainMenuScreen.Load();
                     break;
                 default: Load(); break;

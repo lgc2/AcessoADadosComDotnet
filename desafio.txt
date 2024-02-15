@@ -2,8 +2,8 @@ DESAFIOS
 ________
 
 Cadastrar um usuário --> OK
-Cadastrar um perfil
-Vincular um usuário a um perfil
+Cadastrar um perfil --> OK
+Vincular um usuário a um perfil --> OK
 
 Cadastrar uma categoria
 
