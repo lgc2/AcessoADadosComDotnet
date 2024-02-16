@@ -13,8 +13,9 @@ namespace Blog.Screens.PostScreens
             Console.WriteLine("2- Cadastrar post");
             Console.WriteLine("3- Atualizar post");
             Console.WriteLine("4- Excluir post");
+            Console.WriteLine("5- Vincular um post a uma tag");
             Console.WriteLine();
-            Console.WriteLine("5- Voltar ao Menu Principal");
+            Console.WriteLine("6- Voltar ao Menu Principal");
             var option = short.Parse(Console.ReadLine());
 
             switch (option)
@@ -32,6 +33,9 @@ namespace Blog.Screens.PostScreens
                     // DeleteCategoryScreen.Load();
                     break;
                 case 5:
+                    PostTagScreen.Load();
+                    break;
+                case 6:
                     MainMenuScreen.Load();
                     break;
                 default: Load(); break;

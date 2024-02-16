@@ -20,8 +20,7 @@ namespace Blog.Screens
             Console.WriteLine("3- Gestão de categoria");
             Console.WriteLine("4- Gestão de tag");
             Console.WriteLine("5- Gestão de post");
-            Console.WriteLine("6- Vincular post/tag");
-            Console.WriteLine("7- Relatórios");
+            Console.WriteLine("6- Relatórios");
             Console.WriteLine();
             Console.WriteLine("0- Sair");
             var option = short.Parse(Console.ReadLine()!);
@@ -48,9 +47,6 @@ namespace Blog.Screens
                     MenuPostScreen.Load();
                     break;
                 case 6:
-                    // .Load();
-                    break;
-                case 7:
                     // .Load();
                     break;
                 default: Load(); break;

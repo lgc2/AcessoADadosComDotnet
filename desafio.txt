@@ -10,7 +10,7 @@ Cadastrar uma categoria --> OK
 Cadastrar uma tag --> OK
 
 Cadastrar um post --> OK
-Vincular um post a uma tag
+Vincular um post a uma tag --> OK
 
 Listar usuários (Nome, Email e perfis separados por vírgula) --> OK
 Listar categorias com quantidade de posts
