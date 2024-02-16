@@ -5,7 +5,7 @@ Cadastrar um usuário --> OK
 Cadastrar um perfil --> OK
 Vincular um usuário a um perfil --> OK
 
-Cadastrar uma categoria
+Cadastrar uma categoria --> OK
 
 Cadastrar uma tag
 
