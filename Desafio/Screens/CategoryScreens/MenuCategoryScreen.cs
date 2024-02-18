@@ -20,7 +20,7 @@ namespace Blog.Screens.CategoryScreens
             switch (option)
             {
                 case 1:
-                    // ListCategoryScreen.Load();
+                    ListCategoryScreen.Load();
                     break;
                 case 2:
                     CreateCategoryScreen.Load();
