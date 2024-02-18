@@ -43,7 +43,7 @@ namespace Blog.Repositories
             });
         }
 
-        public IEnumerable<Post> GetWithCategories()
+        public IEnumerable<Post> GetWithCategory()
         {
             var query = @"
             SELECT
@@ -64,6 +64,48 @@ namespace Blog.Repositories
                     post.Category = category;
                     return post;
                 }, splitOn: "Id");
+        }
+
+        public IEnumerable<Post> GetWithTags()
+        {
+            var query = @"
+            SELECT
+                [Post].*,
+                [Tag].*
+            FROM
+                [Post]
+                LEFT JOIN
+                    [PostTag] ON [Post].[Id] = [PostTag].[PostId]
+                LEFT JOIN
+                    [Tag] ON [PostTag].[TagId] = [Tag].[Id]
+            ORDER BY
+                [Post].[Id] ASC,
+                [Post].[CategoryId] ASC,
+                [Post].[AuthorId] ASC";
+
+            var posts = new List<Post>();
+
+            var items = _connection.Query<Post, Tag, Post>(
+                query,
+                (post, tag) =>
+                {
+                    var pst = posts.FirstOrDefault(x => x.Id == post.Id);
+                    if (pst == null)
+                    {
+                        pst = post;
+
+                        if (tag != null)
+                            pst.Tags.Add(tag);
+
+                        posts.Add(pst);
+                    }
+                    else
+                        pst.Tags.Add(tag);
+
+                    return post;
+                }, splitOn: "Id");
+
+            return posts;
         }
     }
 }

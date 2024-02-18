@@ -18,7 +18,7 @@ namespace Blog.Screens.PostScreens
         private static void ListWithCategory()
         {
             var repository = new PostRepository(Database.Connection);
-            var posts = repository.GetWithCategories();
+            var posts = repository.GetWithCategory();
 
             foreach (var item in posts)
             {
