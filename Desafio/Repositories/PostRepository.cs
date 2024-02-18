@@ -42,5 +42,28 @@ namespace Blog.Repositories
                 CategoryName = categoryName
             });
         }
+
+        public IEnumerable<Post> GetWithCategories()
+        {
+            var query = @"
+            SELECT
+                *
+            FROM
+                [Post]
+            INNER JOIN
+                [Category] ON [Post].[CategoryId] = [Category].[Id]
+            ORDER BY
+                [Post].[Id] ASC,
+                [Post].[CategoryId] ASC,
+                [Post].[AuthorId] ASC";
+
+            return _connection.Query<Post, Category, Post>(
+                query,
+                (post, category) =>
+                {
+                    post.Category = category;
+                    return post;
+                }, splitOn: "Id");
+        }
     }
 }

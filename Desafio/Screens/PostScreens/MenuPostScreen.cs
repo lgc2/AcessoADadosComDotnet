@@ -22,7 +22,7 @@ namespace Blog.Screens.PostScreens
             switch (option)
             {
                 case 1:
-                    // ListCategoryScreen.Load();
+                    ListPostScreen.Load();
                     break;
                 case 2:
                     ListPostsByCategoryNameScreen.Load();
@@ -31,10 +31,10 @@ namespace Blog.Screens.PostScreens
                     CreatePostScreen.Load();
                     break;
                 case 4:
-                    // UpdateCategoryScreen.Load();
+                    // UpdatePostScreen.Load();
                     break;
                 case 5:
-                    // DeleteCategoryScreen.Load();
+                    // DeletePostScreen.Load();
                     break;
                 case 6:
                     PostTagScreen.Load();

@@ -19,5 +19,8 @@ namespace Blog.Models
 
         [Write(false)] // para não escrever no insert
         public List<Tag> Tags { get; set; }
+
+        [Write(false)] // para não escrever no insert
+        public Category Category { get; set; }
     }
 }
