@@ -10,12 +10,13 @@ namespace Blog.Screens.PostScreens
             Console.WriteLine("O que deseja fazer?");
             Console.WriteLine();
             Console.WriteLine("1- Listar posts");
-            Console.WriteLine("2- Cadastrar post");
-            Console.WriteLine("3- Atualizar post");
-            Console.WriteLine("4- Excluir post");
-            Console.WriteLine("5- Vincular um post a uma tag");
+            Console.WriteLine("2- Listar posts de uma categoria");
+            Console.WriteLine("3- Cadastrar post");
+            Console.WriteLine("4- Atualizar post");
+            Console.WriteLine("5- Excluir post");
+            Console.WriteLine("6- Vincular um post a uma tag");
             Console.WriteLine();
-            Console.WriteLine("6- Voltar ao Menu Principal");
+            Console.WriteLine("7- Voltar ao Menu Principal");
             var option = short.Parse(Console.ReadLine());
 
             switch (option)
@@ -24,18 +25,21 @@ namespace Blog.Screens.PostScreens
                     // ListCategoryScreen.Load();
                     break;
                 case 2:
-                    CreatePostScreen.Load();
+                    ListPostsByCategoryNameScreen.Load();
                     break;
                 case 3:
-                    // UpdateCategoryScreen.Load();
+                    CreatePostScreen.Load();
                     break;
                 case 4:
-                    // DeleteCategoryScreen.Load();
+                    // UpdateCategoryScreen.Load();
                     break;
                 case 5:
-                    PostTagScreen.Load();
+                    // DeleteCategoryScreen.Load();
                     break;
                 case 6:
+                    PostTagScreen.Load();
+                    break;
+                case 7:
                     MainMenuScreen.Load();
                     break;
                 default: Load(); break;

@@ -23,5 +23,24 @@ namespace Blog.Repositories
                 TagId = tagId
             });
         }
+
+        public IEnumerable<Post> GetPostsByCategoryName(string categoryName)
+        {
+            var query = @"
+                SELECT
+                    [Post].*
+                FROM
+                    [Post]
+                INNER JOIN
+                    [Category] ON [Post].[CategoryId] = [Category].[Id]
+                WHERE [Category].[Name] = @CategoryName
+                ORDER BY
+                    [Post].[Id] ASC";
+
+            return _connection.Query<Post>(query, new
+            {
+                CategoryName = categoryName
+            });
+        }
     }
 }
