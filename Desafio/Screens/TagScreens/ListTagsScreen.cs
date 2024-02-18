@@ -18,12 +18,12 @@ namespace Blog.Screens.TagScreens
 
         private static void List()
         {
-            var repository = new Repository<Tag>(Database.Connection);
-            var tags = repository.Get();
+            var repository = new TagRepository(Database.Connection);
+            var tags = repository.GetWithPostsQuantity();
 
             foreach (var item in tags)
             {
-                Console.WriteLine($"{item.Id} - {item.Name} ({item.Slug})");
+                Console.WriteLine($"{item.Id} - {item.Name} ({item.Slug}) - Quantidade de posts: {item.PostsQuantity}");
             }
         }
     }

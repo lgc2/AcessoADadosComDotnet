@@ -13,8 +13,8 @@ Cadastrar um post --> OK
 Vincular um post a uma tag --> OK
 
 Listar usuários (Nome, Email e perfis separados por vírgula) --> OK
-Listar categorias com quantidade de posts
-Listar tags com quantidade de posts
+Listar categorias com quantidade de posts --> OK
+Listar tags com quantidade de posts --> OK
 Listar os posts de uma categoria
 Listar todos os posts com sua categoria
 Listar os posts com sua tag (separados por vírgula)
